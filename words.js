@@ -124,7 +124,7 @@ var that = this;
             gameInit.guessesLeft--;
 
         }
-        console.log("this ran");
+
     }
 
     //Function to restart the game or end it based on the users input
@@ -168,8 +168,7 @@ var that = this;
         // If our hangman string equals the solution.
         // (meaning that we guessed all the letters to match the solution)...
         if (gameInit.lettersInChosenWord.toString() === gameInit.blanksAndSuccesses.toString()) {
-            console.log(gameInit.lettersInChosenWord.toString());
-            console.log(gameInit.blanksAndSuccesses.toString());
+
             // Add to the win counter
             gameInit.winCounter++;
 
@@ -178,8 +177,7 @@ var that = this;
 
             // Update the win counter in the HTML
             console.log(gameInit.winCounter);
-            console.log(gameInit.lettersInChosenWord);
-            console.log(gameInit.blanksAndSuccesses);
+
             // Restart the game
             this.restart();
         }

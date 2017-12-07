@@ -47,7 +47,7 @@ var Letter = function () {
         this.numBlanks = this.lettersInChosenWord.length;
 
         // We print the solution in console (for testing).
-        console.log(this.chosenWord);
+        //console.log(this.chosenWord);
 
         // CRITICAL LINE
         // Here we *reset* the guess and success array at each round.
