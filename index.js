@@ -6,5 +6,5 @@ var runGame = new Words();
 
 //var gameInit = new letter();
 
-// runGame.gameInit();
-// runGame.firstPrompt();
+runGame.gameInit.startGame();
+runGame.firstPrompt();

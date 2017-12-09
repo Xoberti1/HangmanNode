@@ -1,55 +1,56 @@
 var inquirer = require("inquirer");
-var startGame = require("./letter.js");
+var Letter = require("./letter.js");
 
-var gameInit = new startGame();
+// var gameInit = new Letter();
 
 var Words = function () {
-var that = this;
+    var that = this;
+    this.gameInit = new Letter();
     this.checkLetters = function (letter) {
 
-        // This boolean will be toggled based on whether or not
-        // a user letter is found anywhere in the word.
-        var letterInWord = false;
+        // // This boolean will be toggled based on whether or not
+        // // a user letter is found anywhere in the word.
+        // var letterInWord = false;
 
-        // Check if a letter exists inside the array at all.
-        for (var i = 0; i < gameInit.numBlanks; i++) {
+        // // Check if a letter exists inside the array at all.
+        // for (var i = 0; i < gameInit.numBlanks; i++) {
 
-            if (gameInit.chosenWord[i] === letter) {
+        //     if (gameInit.chosenWord[i] === letter) {
 
-                // If the letter exists then toggle this boolean to true.
-                // This will be used in the next step.
-                letterInWord = true;
-            }
-        }
+        //         // If the letter exists then toggle this boolean to true.
+        //         // This will be used in the next step.
+        //         letterInWord = true;
+        //     }
+        // }
 
         // If the letter exists somewhere in the word,
         // then figure out exactly where (which indices).
-        if (letterInWord) {
-
+        // if (letterInWord) {
+            var letterMatched = 0;
             // Loop through the word
-            for (var j = 0; j < gameInit.numBlanks; j++) {
+            for (var j = 0; j < this.gameInit.numBlanks; j++) {
 
                 // Populate the blanksAndSuccesses with every instance of the letter.
-                if (gameInit.chosenWord[j] === letter) {
-
+                if (this.gameInit.chosenWord[j] === letter) {
+                    letterMatched += 1;
                     // Here we set specific blank spaces to equal the correct letter
                     // when there is a match.
-                    gameInit.blanksAndSuccesses[j] = letter;
+                    this.gameInit.blanksAndSuccesses[j] = letter;
                 }
             }
 
             // Log the current blanks and successes for testing.
-            console.log(gameInit.blanksAndSuccesses);
-        }
+            console.log(this.gameInit.blanksAndSuccesses);
+        // }
 
         // If the letter doesn't exist at all...
-        else {
+        if (letterMatched === 0) {
 
             // Then we add the letter to the list of wrong letters.
-            gameInit.wrongGuesses.push(letter);
+            this.gameInit.wrongGuesses.push(letter);
 
             // We also subtract one of the guesses.
-            gameInit.guessesLeft--;
+            this.gameInit.guessesLeft--;
 
         }
 
@@ -69,12 +70,13 @@ var that = this;
         }]).then(function (reset) {
             // if the user responds they do want to play again or gives no response the game will restart with a new word.
             if (reset.playAgain === true) {
-                gameInit.startGame();
+                that.gameInit.startGame();
                 that.firstPrompt();
-            } else {
-                // if the user responds no they will just return to their terminal
-                gameInit.startGame();
-            }
+            } //else {
+            //     return
+            //     // if the user responds no they will just return to their terminal
+            //     //gameInit.startGame();
+            // }
         })
     }
 
@@ -82,45 +84,45 @@ var that = this;
 
         // First, log an initial status update in the console
         // telling us how many wins, losses, and guesses are left.
-        console.log("WinCount: " + gameInit.winCounter + " | LossCount: " + gameInit.lossCounter + " | GuessesLeft: " + gameInit.guessesLeft);
+        console.log("WinCount: " + this.gameInit.winCounter + " | LossCount: " + this.gameInit.lossCounter + " | GuessesLeft: " + this.gameInit.guessesLeft);
 
-        // Update the HTML to reflect the new number of guesses.
-        console.log(gameInit.guessesLeft);
+        // Update node to reflect the new number of guesses.
+        console.log(this.gameInit.guessesLeft);
 
         // This will print the array of guesses and blanks onto the page.
-        console.log(gameInit.blanksAndSuccesses.join(" "));
+        console.log(this.gameInit.blanksAndSuccesses.join(" "));
 
         // This will print the wrong guesses onto the page.
-        console.log(gameInit.wrongGuesses.join(" "));
+        console.log(this.gameInit.wrongGuesses.join(" "));
 
         // If our hangman string equals the solution.
         // (meaning that we guessed all the letters to match the solution)...
-        if (gameInit.lettersInChosenWord.toString() === gameInit.blanksAndSuccesses.toString()) {
+        if (this.gameInit.lettersInChosenWord.toString() === this.gameInit.blanksAndSuccesses.toString()) {
 
             // Add to the win counter
-            gameInit.winCounter++;
+            this.gameInit.winCounter++;
 
             // Give the user an alert
             console.log("You win!");
 
             // Update the win counter in the HTML
-            console.log(gameInit.winCounter);
+            console.log(this.gameInit.winCounter);
 
             // Restart the game
             this.restart();
         }
 
         // If we've run out of guesses
-        else if (gameInit.guessesLeft === 0) {
+        else if (this.gameInit.guessesLeft === 0) {
 
             // Add to the loss counter
-            gameInit.lossCounter++;
+            this.gameInit.lossCounter++;
 
             // Give the user an alert
             console.log("You lose");
 
             // Update the loss counter in the HTML
-            console.log(gameInit.lossCounter);
+            console.log(this.gameInit.lossCounter);
 
             // Restart the game
             this.restart();
@@ -162,8 +164,9 @@ var that = this;
             that.roundComplete();
         })
     }
-    gameInit.startGame();
-    this.firstPrompt();
+
+    // this.gameInit.startGame();
+    // this.firstPrompt();
 }
 
 //gameInit.startGame();
